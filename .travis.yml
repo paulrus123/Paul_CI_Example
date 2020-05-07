@@ -2,7 +2,6 @@ sudo: required
 language: bash
 env:
   global:
-    - IMAGE_NAME=gableroux/unity3d:2019.3.7f1
     - BUILD_NAME=unity-example-travis
 services:
 - docker
@@ -14,7 +13,7 @@ before_install:
 jobs:
   include:
   - stage: build
-    env: BUILD_TARGET=StandaloneLinux64
+    env: BUILD_TARGET=StandaloneLinux64 IMAGE_NAME=gableroux/unity3d:2019.3.7f1
     script:
       - "chmod +x ./ci/* && ./ci/docker_build.sh"
       - "sudo chmod -R 777 ./Builds/"
@@ -28,7 +27,7 @@ jobs:
       on:
         tags: true
   - stage: build
-    env: BUILD_TARGET=StandaloneOSX
+    env: BUILD_TARGET=StandaloneOSX IMAGE_NAME=gableroux/unity3d:2019.3.7f1-mac
     script:
       - "chmod +x ./ci/* && ./ci/docker_build.sh"
       - "sudo chmod -R 777 ./Builds/"
