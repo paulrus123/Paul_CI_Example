@@ -5,26 +5,19 @@ env:
     - IMAGE_NAME=gableroux/unity3d:2019.3.7f1
     - BUILD_NAME=unity-example-travis
 services:
-  - docker
+- docker
 before_install:
-  - openssl aes-256-cbc -K $encrypted_ce143bb546cb_key -iv
-  $encrypted_ce143bb546cb_iv -in Unity_v2019.x.ulf.enc -out ./Unity_v2019.x.ulf -d
-  - export UNITY_LICENSE_CONTENT='cat Unity_v2019.x.ulf'
-  - rm Unity_v2019.x.ulf
-  - docker pull $IMAGE_NAME
+- openssl aes-256-cbc -K $encrypted_ce143bb546cb_key -iv $encrypted_ce143bb546cb_iv 
+  -in Unity_v2019.x.ulf.enc -out ./Unity_v2019.x.ulf -d
+- export UNITY_LICENSE_CONTENT=`cat Unity_v2019.x.ulf`
+- rm Unity_v2019.x.ulf  
+- docker pull $IMAGE_NAME
 jobs:
   include:
-    - stage: BUILD_NAME
-      env: BUILD_TARGET=StandaloneLinux64
-      script:
-        - "chmod +x ./ci/* && ./ci/docker_build.sh"
-        - "sudo chmod -R 777 ./Builds/"
-        - "cd ./Builds/"
-        - "zip -r StandaloneLinux64.zip ./StandaloneLinux64/"
-      deploy:
-        provider: releases
-        api_key: $GITHUB_API_KEY
-        file: StandaloneLinux64.zip
-        skip_cleanup: true
-        on:
-          tags: true
+  - stage: BUILD_NAME
+    env: BUILD_TARGET=StandaloneLinux64
+    script:
+      - "chmod +x ./ci/* && ./ci/docker_build.sh"
+      - "sudo chmod -R 777 ./Builds/"
+      - "cd ./Builds/"
+      - "zip -r StandaloneLinux64.zip ./StandaloneLinux64/"
