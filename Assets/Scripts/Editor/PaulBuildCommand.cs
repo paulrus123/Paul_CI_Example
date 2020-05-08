@@ -4,7 +4,7 @@ using System;
 
 public class PaulBuildCommand : MonoBehaviour
 {
-    static string[] scenes = { "Assets/Scenes/Main.unity" };
+    static string[] scenes = { "Assets/Scenes/SampleScene.unity" };
 
     static string GetArgument(string name)
     {
@@ -17,17 +17,6 @@ public class PaulBuildCommand : MonoBehaviour
             }
         }
         return null;
-    }
-
-    static string GetBuildPath()
-    {
-        string buildPath = GetArgument("customBuildPath");
-        Console.WriteLine(":: Received customBuildPath " + buildPath);
-        if (buildPath == "")
-        {
-            throw new Exception("customBuildPath argument is missing");
-        }
-        return buildPath;
     }
 
     static BuildTarget GetBuildTarget()
@@ -51,9 +40,14 @@ public class PaulBuildCommand : MonoBehaviour
 
     static void PerformBuild()
     {
-        var buildPath = GetBuildPath();
+        var buildPath = GetArgument("customBuildPath");
         var buildTarget = GetBuildTarget();
+        var buildName = GetArgument("customBuildName");
+        if(buildPath==null || buildTarget==null || buildName == null)
+        {
+            throw new Exception("Exception: Name path or target is missing! ");
+        }
 
-        var buildReport = BuildPipeline.BuildPlayer(scenes, buildPath, buildTarget, BuildOptions.None);
+        var buildReport = BuildPipeline.BuildPlayer(scenes, buildPath + buildName, buildTarget, BuildOptions.None);
     }
 }
