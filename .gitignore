@@ -1,5 +1,6 @@
 customScript.sh
 Unity_v2019.x.ulf
+localDockerBuild/Unity_lic.ulf
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
