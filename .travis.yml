@@ -13,7 +13,7 @@ before_install:
 jobs:
   include:
   - stage: build
-    env: BUILD_TARGET=StandaloneLinux64 IMAGE_NAME=gableroux/unity3d:2019.3.7f1
+    env: BUILD_TARGET=StandaloneLinux64 IMAGE_NAME=psorenson/unity2019image
     script:
       - "chmod +x ./ci/* && ./ci/docker_build.sh"
       - "sudo chmod -R 777 ./Builds/"
